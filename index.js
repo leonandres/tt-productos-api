@@ -1,13 +1,18 @@
 import {argv} from 'node:process';
-//Get
-if (argv[2] == "GET" && argv[3] == "products") {
+
+const [, , metodo, recurso, ...args] = argv;
+//Get de todos (npm run start -- GET products)
+if (metodo == "GET" && recurso == "products") {
     const response = await fetch('http://fakestoreapi.com/products');
     const data = await response.json();
     console.log("GET, productos:", data);
 }
-
+//Get de un producto (npm run start -- GET products/1)
 if (argv[2] == "GET" && argv[3].startsWith("products/")) {
-    console.log("GET, aún no llama a nada");
+    const idProducto = argv[3].split("/")[1];
+    const response = await fetch(`http://fakestoreapi.com/products/${idProducto}`);
+    const data = await response.json();
+    console.log("Get - Producto :", data);
 }
 
 if(argv [2] == "POST" && argv[3] == "products") {
